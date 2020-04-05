@@ -4,9 +4,9 @@ exports.message = (req, pdf) => {
     return {
         to: req.customer.email,
         from: 'sales@it-premium.com.ua',
-        subject: 'Quotation from IT-Premium',
-        text: 'This is your quotation from IT-Premium by your request',
-        html: '<strong>find our quotation in the email attached</strong>',
+        subject: req.email.title,
+        text: req.email.body,
+        html: req.email.body,
         attachments: [
             {
                 content: pdf.toString('base64'),

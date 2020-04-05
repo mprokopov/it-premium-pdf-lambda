@@ -11,17 +11,18 @@ exports.handler =  function(event, context, callback) {
 
     pdf.generatePdf(markup.docPattern(body), (content) => {
         sgMail.send(mail.message(body, content))
-            .then(() => {
+            .then(
+                () => {
+                    callback(null, {
+                        statusCode: 200,
+                        headers: {
+                            'Content-type' : 'application/json',
+                            'Access-Control-Allow-Origin' : '*', // Required for CORS support to work
+                            'Access-Control-Allow-Credentials' : true
+                        },
+                        body: JSON.stringify({ msg: 'Successfully sent'})
+                    });
             }, console.error);
 
-        callback(null, {
-            statusCode: 200,
-            headers: {
-                'Content-type' : 'application/json',
-                'Access-Control-Allow-Origin' : '*', // Required for CORS support to work
-                'Access-Control-Allow-Credentials' : true
-            },
-            body: JSON.stringify({ msg: 'Successfully sent'})
-        });
     });
 };

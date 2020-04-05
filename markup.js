@@ -39,8 +39,8 @@ exports.docPattern = (params) => {
     return {
         content: [
             { image: 'logo.png' },
-            header(`Добрый день, ${params.customer.name}`),
-            "Спасибо, что вы обратились к нашей компании. Компания IT-Premium предоставляет ИТ услуги высокого качества с 2007г.", "Вы выбрали следующий набор услуг",
+            header(`${params.customer.name},`),
+            params.email.welcome,
             propositions(params.propositions),
             {
 		            style: 'tableExample',
