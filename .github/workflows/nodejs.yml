@@ -21,7 +21,7 @@ jobs:
       with:
         node-version: 10.x
     - run: npm ci
-    - run: zip archive.zip .
+    - run: zip -rq archive .
 
     - name: default deploy
       uses: appleboy/lambda-action@master
