@@ -14,23 +14,21 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x]
-
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 10.x
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 10.x
     - run: npm ci
-      env:
-        CI: true
+    - run: zip archive.zip .
 
-    - name: Upload math result for job 1
-      uses: actions/upload-artifact@v1
+    - name: default deploy
+      uses: appleboy/lambda-action@master
       with:
-        name: public
-        path: .
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_region: eu-central-1
+        function_name: generate-pdf
+        zip_file: archive.zip
 
